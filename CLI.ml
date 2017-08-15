@@ -81,7 +81,7 @@ let init () =
 
 exception More_than_once of string
 exception Option_is_mandatory of string
-exception Duplicates_in_specification of string
+exception Duplicate_in_specification of string
 
 let string_of_strings l =
   String.concat ", " l
@@ -89,7 +89,7 @@ let string_of_strings l =
 (* find if the short or the long option was used on the CLI *)
 let match_kwd (kwd: string list) (args: string list): string =
   if L.length kwd > L.length (List.sort_uniq String.compare kwd) then
-    raise (Duplicates_in_specification (string_of_strings kwd));
+    raise (Duplicate_in_specification (string_of_strings kwd));
   let matched = L.filter (fun arg -> L.exists ((=) arg) kwd) args in
   match matched with
   | [] -> raise (Option_is_mandatory (string_of_strings kwd))
