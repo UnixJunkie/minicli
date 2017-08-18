@@ -1,0 +1,17 @@
+Name:       minicli
+Version:    1.0
+Authors:    Francois Berenger
+License:    LGPL
+Synopsis:   minimalist library for command line parsing
+obuild-ver: 1
+
+library minicli
+  oflags: -bin-annot -w +27 -warn-error +8
+  modules: CLI
+  src-dir: .
+
+executable test
+  oflags: -bin-annot -w +27 -warn-error +8
+  Path: .
+  BuildDepends: minicli
+  MainIs: test.ml
