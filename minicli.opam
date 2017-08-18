@@ -1,0 +1,9 @@
+opam-version: "1.2"
+name: "minicli"
+maintainer: "ligand@free.fr"
+authors: "Francois Berenger"
+homepage: "https://github.com/UnixJunkie/minicli"
+bug-reports: "https://github.com/UnixJunkie/minicli/issues"
+dev-repo: "https://github.com/UnixJunkie/minicli.git"
+build: ["jbuilder" "build" "-p" name]
+depends: ["jbuilder" {build}]
