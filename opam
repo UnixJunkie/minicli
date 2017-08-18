@@ -5,5 +5,5 @@ authors: "Francois Berenger"
 homepage: "https://github.com/UnixJunkie/minicli"
 bug-reports: "https://github.com/UnixJunkie/minicli/issues"
 dev-repo: "https://github.com/UnixJunkie/minicli.git"
-build: ["jbuilder" "build" "-p" name]
+build: ["jbuilder" "build" "-p" "CLI"]
 depends: ["jbuilder" {build}]
