@@ -100,26 +100,26 @@ let match_kwd (kwd: string list) (args: string list): string =
 
 let get_int (kwd: string list) (args: string list): int =
   let k = match_kwd kwd args in
-  match get_param (Int k) args with
-  | I i -> i
+  match get_param (Raw_option.Int k) args with
+  | Processed_option.I i -> i
   | other -> raise (Not_an_int (k ^ " " ^ (Processed_option.to_string other)))
 
 let get_string (kwd: string list) (args: string list): string =
   let k = match_kwd kwd args in
-  match get_param (String k) args with
-  | S s -> s
+  match get_param (Raw_option.String k) args with
+  | Processed_option.S s -> s
   | other -> raise (Not_a_string (k ^ " " ^ (Processed_option.to_string other)))
 
 let get_float (kwd: string list) (args: string list): float =
   let k = match_kwd kwd args in
-  match get_param (Float k) args with
-  | F f -> f
+  match get_param (Raw_option.Float k) args with
+  | Processed_option.F f -> f
   | other -> raise (Not_a_float (k ^ " " ^ (Processed_option.to_string other)))
 
 let get_bool (kwd: string list) (args: string list): bool =
   let k = match_kwd kwd args in
-  match get_param (Bool k) args with
-  | B b -> b
+  match get_param (Raw_option.Bool k) args with
+  | Processed_option.B b -> b
   | other -> raise (Not_a_bool (k ^ " " ^ (Processed_option.to_string other)))
 
 let get_set_bool (kwd: string list) (args: string list): bool =
