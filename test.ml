@@ -5,7 +5,7 @@ let main () =
   let argc, args = CLI.init () in
   if argc = 1 then
     (printf "usage:\n\
-             %s -i|--input <file> -o|--output <file> -n <int> -x <float> \
+             %s {-i|--input} <file> {-o|--output} <file> -n <int> -x <float> \
              [-v] [--hi <string>]\n" Sys.argv.(0);
      exit 1);
   let input_fn = CLI.get_string ["-i";"--input"] args in
