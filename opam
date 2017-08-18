@@ -5,5 +5,13 @@ authors: "Francois Berenger"
 homepage: "https://github.com/UnixJunkie/minicli"
 bug-reports: "https://github.com/UnixJunkie/minicli/issues"
 dev-repo: "https://github.com/UnixJunkie/minicli.git"
-build: ["jbuilder" "build" "-p" "CLI"]
-depends: ["jbuilder" {build}]
+build: [
+  ["obuild" "configure"]
+  ["obuild" "build" "lib-minicli"]
+]
+install: ["obuild" "install"]
+remove: ["ocamlfind" "remove" "minicli"]
+depends: [
+  "ocamlfind"
+  "obuild" {build}
+]
