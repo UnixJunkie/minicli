@@ -52,3 +52,20 @@ val get_float_opt : string list -> string list -> float option
 
 (** undocumented *)
 val get_bool_opt : string list -> string list -> bool option
+
+(** {4 Parse optional options with a default value} *)
+
+(** read an optional int from the command line, or use the provided default
+    if option was not seen on the command line *)
+val get_int_def : string list -> string list -> int -> int
+
+(** read an optional string from the command line, or use the provided default
+    if option was not seen on the command line *)
+val get_string_def : string list -> string list -> string -> string
+
+(** read an optional float from the command line, or use the provided default
+    if option was not seen on the command line *)
+val get_float_def : string list -> string list -> float -> float
+
+(** undocumented *)
+val get_bool_def : string list -> string list -> bool -> bool

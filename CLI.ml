@@ -96,7 +96,7 @@ let match_kwd (kwd: string list) (args: string list): string =
   | [k] -> k
   | _ -> raise (More_than_once (string_of_strings kwd))
 
-(* for mandatory options *)
+(* mandatory options *)
 
 let get_int (kwd: string list) (args: string list): int =
   let k = match_kwd kwd args in
@@ -129,7 +129,7 @@ let get_set_bool (kwd: string list) (args: string list): bool =
 let get_reset_bool (kwd: string list) (args: string list): bool =
   not (get_set_bool kwd args)
 
-(* for optional options *)
+(* optional options *)
 
 let get_int_opt (kwd: string list) (args: string list): int option =
   try Some (get_int kwd args)
@@ -146,3 +146,26 @@ let get_float_opt (kwd: string list) (args: string list): float option =
 let get_bool_opt (kwd: string list) (args: string list): bool option =
   try Some (get_bool kwd args)
   with Option_is_mandatory _ -> None
+
+(* optional options with a default value *)
+
+let get_int_def (kwd: string list) (args: string list) (def: int): int =
+  match get_int_opt kwd args with
+  | None -> def
+  | Some i -> i
+
+let get_string_def (kwd: string list) (args: string list) (def: string)
+  : string =
+  match get_string_opt kwd args with
+  | None -> def
+  | Some s -> s
+
+let get_float_def (kwd: string list) (args: string list) (def: float): float =
+  match get_float_opt kwd args with
+  | None -> def
+  | Some f -> f
+
+let get_bool_def (kwd: string list) (args: string list) (def: bool): bool =
+  match get_bool_opt kwd args with
+  | None -> def
+  | Some b -> b
