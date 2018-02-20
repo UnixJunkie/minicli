@@ -22,6 +22,9 @@ val init: unit -> int * string list
 (** read a mandatory int from the command line *)
 val get_int : string list -> string list -> int
 
+(** read a mandatory char from the command line *)
+val get_char : string list -> string list -> char
+
 (** read a mandatory string from the command line *)
 val get_string : string list -> string list -> string
 
@@ -44,6 +47,9 @@ val get_reset_bool : string list -> string list -> bool
 (** read an optional int from the command line *)
 val get_int_opt : string list -> string list -> int option
 
+(** read an optional char from the command line *)
+val get_char_opt : string list -> string list -> char option
+
 (** read an optional string from the command line *)
 val get_string_opt : string list -> string list -> string option
 
@@ -62,6 +68,10 @@ val get_int_def : string list -> string list -> int -> int
 (** read an optional string from the command line, or use the provided default
     if option was not seen on the command line *)
 val get_string_def : string list -> string list -> string -> string
+
+(** read an optional char from the command line, or use the provided default
+    if option was not seen on the command line *)
+val get_char_def : string list -> string list -> char -> char
 
 (** read an optional float from the command line, or use the provided default
     if option was not seen on the command line *)

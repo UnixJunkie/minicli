@@ -8,12 +8,14 @@ module L = List
 module Processed_option = struct
 
   type t = S of string
+         | C of char
          | I of int
          | F of float
          | B of bool
 
   let to_string = function
     | S s -> "S: " ^ s
+    | C c -> "C: " ^ (String.make 1 c)
     | I i -> "I: " ^ (string_of_int i)
     | F f -> "F: " ^ (string_of_float f)
     | B b -> "B: " ^ (string_of_bool b)
@@ -21,6 +23,7 @@ module Processed_option = struct
 end
 
 exception Not_an_int of string
+exception Not_a_char of string
 exception Not_a_string of string
 exception Not_a_float of string
 exception Not_a_bool of string
@@ -28,12 +31,14 @@ exception Not_a_bool of string
 module Raw_option = struct
 
   type t = String of string
+         | Char of string
          | Int of string
          | Float of string
          | Bool of string
 
   let to_string = function
     | String s
+    | Char s
     | Int s
     | Float s
     | Bool s -> s
@@ -46,18 +51,24 @@ module Raw_option = struct
     try Scanf.sscanf s "%d" (fun x -> x)
     with _ -> raise (Not_an_int s)
 
+  let read_char s =
+    try Scanf.sscanf s "%c" (fun x -> x)
+    with _ -> raise (Not_a_char s)
+
   let read_bool = function
     | "on" | "true" -> true
     | "off" | "false" -> false
     | other -> raise (Not_a_bool other)
 
   let process x y =
-    Processed_option.(match x with
-        | String _ -> S y
-        | Int _ -> I (read_int y)
-        | Float _ -> F (read_float y)
-        | Bool _ -> B (read_bool y)
-      )
+    Processed_option.(
+      match x with
+      | String _ -> S y
+      | Char _ -> C (read_char y)
+      | Int _ -> I (read_int y)
+      | Float _ -> F (read_float y)
+      | Bool _ -> B (read_bool y)
+    )
 
 end
 
@@ -110,6 +121,12 @@ let get_string (kwd: string list) (args: string list): string =
   | Processed_option.S s -> s
   | other -> raise (Not_a_string (k ^ " " ^ (Processed_option.to_string other)))
 
+let get_char (kwd: string list) (args: string list): char =
+  let k = match_kwd kwd args in
+  match get_param (Raw_option.Char k) args with
+  | Processed_option.C c -> c
+  | other -> raise (Not_a_char (k ^ " " ^ (Processed_option.to_string other)))
+
 let get_float (kwd: string list) (args: string list): float =
   let k = match_kwd kwd args in
   match get_param (Raw_option.Float k) args with
@@ -139,6 +156,10 @@ let get_string_opt (kwd: string list) (args: string list): string option =
   try Some (get_string kwd args)
   with Option_is_mandatory _ -> None
 
+let get_char_opt (kwd: string list) (args: string list): char option =
+  try Some (get_char kwd args)
+  with Option_is_mandatory _ -> None
+
 let get_float_opt (kwd: string list) (args: string list): float option =
   try Some (get_float kwd args)
   with Option_is_mandatory _ -> None
@@ -159,6 +180,11 @@ let get_string_def (kwd: string list) (args: string list) (def: string)
   match get_string_opt kwd args with
   | None -> def
   | Some s -> s
+
+let get_char_def (kwd: string list) (args: string list) (def: char): char =
+  match get_char_opt kwd args with
+  | None -> def
+  | Some c -> c
 
 let get_float_def (kwd: string list) (args: string list) (def: float): float =
   match get_float_opt kwd args with
