@@ -9,73 +9,79 @@ exception More_than_once of string
 exception Option_is_mandatory of string
 exception Duplicate_in_specification of string
 
+(** Sys.argv as a list *)
+type args = string list
+
+(** all accepted strings meaning the same option *)
+type option_strings = string list
+
 (** {4 Initialization} *)
 
 (** Call [init] before using any of the other funtions
     (unless you really know what you are doing).
     [let argc, args = CLI.init () in ...]
     will compute [argc] and transform Sys.argv into the string list [args]. *)
-val init: unit -> int * string list
+val init: unit -> int * args
 
 (** {4 Parse mandatory options} *)
 
 (** read a mandatory int from the command line *)
-val get_int: string list -> string list -> int
+val get_int: option_strings -> args -> int
 
 (** read a mandatory char from the command line *)
-val get_char: string list -> string list -> char
+val get_char: option_strings -> args -> char
 
 (** read a mandatory string from the command line *)
-val get_string: string list -> string list -> string
+val get_string: option_strings -> args -> string
 
 (** read a mandatory float from the command line *)
-val get_float: string list -> string list -> float
+val get_float: option_strings -> args -> float
 
 (** undocumented *)
-val get_bool: string list -> string list -> bool
+val get_bool: option_strings -> args -> bool
 
 (** return true if flag was present on the command line,
     false otherwise *)
-val get_set_bool: string list -> string list -> bool
+val get_set_bool: option_strings -> args -> bool
 
 (** return false if flag was present on the command line,
     true otherwise *)
-val get_reset_bool: string list -> string list -> bool
+val get_reset_bool: option_strings -> args -> bool
 
 (** {4 Parse optional options} *)
 
 (** read an optional int from the command line *)
-val get_int_opt: string list -> string list -> int option
+val get_int_opt: option_strings -> args -> int option
 
 (** read an optional char from the command line *)
-val get_char_opt: string list -> string list -> char option
+val get_char_opt: option_strings -> args -> char option
 
 (** read an optional string from the command line *)
-val get_string_opt: string list -> string list -> string option
+val get_string_opt: option_strings -> args -> string option
 
 (** read an optional float from the command line *)
-val get_float_opt: string list -> string list -> float option
+val get_float_opt: option_strings -> args -> float option
 
 (** undocumented *)
-val get_bool_opt: string list -> string list -> bool option
+val get_bool_opt: option_strings -> args -> bool option
 
 (** {4 Parse optional options with a default value} *)
 
 (** read an optional int from the command line, or use the provided default
     if option was not seen on the command line *)
-val get_int_def: string list -> string list -> int -> int
+val get_int_def: option_strings -> args -> int -> int
 
 (** read an optional string from the command line, or use the provided default
     if option was not seen on the command line *)
-val get_string_def: string list -> string list -> string -> string
+val get_string_def: option_strings -> args -> string -> string
 
 (** read an optional char from the command line, or use the provided default
     if option was not seen on the command line *)
-val get_char_def: string list -> string list -> char -> char
+val get_char_def: option_strings -> args -> char -> char
 
 (** read an optional float from the command line, or use the provided default
     if option was not seen on the command line *)
-val get_float_def: string list -> string list -> float -> float
+val get_float_def: option_strings -> args -> float -> float
 
 (** undocumented *)
-val get_bool_def: string list -> string list -> bool -> bool
+val get_bool_def: option_strings -> args -> bool -> bool
