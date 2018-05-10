@@ -2,6 +2,10 @@
 module Ht = Hashtbl
 module L = List
 
+type args = string list
+
+type option_strings = string list
+
 (* options provided by the user on the CLI are called 'raw';
    they become 'processed' afterwards *)
 
@@ -109,89 +113,88 @@ let match_kwd (kwd: string list) (args: string list): string =
 
 (* mandatory options *)
 
-let get_int (kwd: string list) (args: string list): int =
+let get_int kwd args =
   let k = match_kwd kwd args in
   match get_param (Raw_option.Int k) args with
   | Processed_option.I i -> i
   | other -> raise (Not_an_int (k ^ " " ^ (Processed_option.to_string other)))
 
-let get_string (kwd: string list) (args: string list): string =
+let get_string kwd args =
   let k = match_kwd kwd args in
   match get_param (Raw_option.String k) args with
   | Processed_option.S s -> s
   | other -> raise (Not_a_string (k ^ " " ^ (Processed_option.to_string other)))
 
-let get_char (kwd: string list) (args: string list): char =
+let get_char kwd args =
   let k = match_kwd kwd args in
   match get_param (Raw_option.Char k) args with
   | Processed_option.C c -> c
   | other -> raise (Not_a_char (k ^ " " ^ (Processed_option.to_string other)))
 
-let get_float (kwd: string list) (args: string list): float =
+let get_float kwd args =
   let k = match_kwd kwd args in
   match get_param (Raw_option.Float k) args with
   | Processed_option.F f -> f
   | other -> raise (Not_a_float (k ^ " " ^ (Processed_option.to_string other)))
 
-let get_bool (kwd: string list) (args: string list): bool =
+let get_bool kwd args =
   let k = match_kwd kwd args in
   match get_param (Raw_option.Bool k) args with
   | Processed_option.B b -> b
   | other -> raise (Not_a_bool (k ^ " " ^ (Processed_option.to_string other)))
 
-let get_set_bool (kwd: string list) (args: string list): bool =
+let get_set_bool kwd args =
   try let _ = match_kwd kwd args in true
   with Option_is_mandatory _ -> false
 
-let get_reset_bool (kwd: string list) (args: string list): bool =
+let get_reset_bool kwd args =
   not (get_set_bool kwd args)
 
 (* optional options *)
 
-let get_int_opt (kwd: string list) (args: string list): int option =
+let get_int_opt kwd args =
   try Some (get_int kwd args)
   with Option_is_mandatory _ -> None
 
-let get_string_opt (kwd: string list) (args: string list): string option =
+let get_string_opt kwd args =
   try Some (get_string kwd args)
   with Option_is_mandatory _ -> None
 
-let get_char_opt (kwd: string list) (args: string list): char option =
+let get_char_opt kwd args =
   try Some (get_char kwd args)
   with Option_is_mandatory _ -> None
 
-let get_float_opt (kwd: string list) (args: string list): float option =
+let get_float_opt kwd args =
   try Some (get_float kwd args)
   with Option_is_mandatory _ -> None
 
-let get_bool_opt (kwd: string list) (args: string list): bool option =
+let get_bool_opt kwd args =
   try Some (get_bool kwd args)
   with Option_is_mandatory _ -> None
 
 (* optional options with a default value *)
 
-let get_int_def (kwd: string list) (args: string list) (def: int): int =
+let get_int_def kwd args def =
   match get_int_opt kwd args with
   | None -> def
   | Some i -> i
 
-let get_string_def (kwd: string list) (args: string list) (def: string)
-  : string =
+let get_string_def kwd args def =
   match get_string_opt kwd args with
   | None -> def
   | Some s -> s
 
-let get_char_def (kwd: string list) (args: string list) (def: char): char =
+let get_char_def kwd args def =
   match get_char_opt kwd args with
   | None -> def
   | Some c -> c
 
-let get_float_def (kwd: string list) (args: string list) (def: float): float =
+let get_float_def kwd args def =
   match get_float_opt kwd args with
   | None -> def
   | Some f -> f
 
-let get_bool_def (kwd: string list) (args: string list) (def: bool): bool =
+let get_bool_def kwd args def =
   match get_bool_opt kwd args with
   | None -> def
   | Some b -> b
