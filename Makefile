@@ -19,5 +19,4 @@ uninstall:
 reinstall: uninstall install
 
 test:
-	dune build test.exe
-	_build/default/test.exe
+	dune runtest
