@@ -1,6 +1,8 @@
 
 open Printf
 
+module CLI = Minicli.CLI
+
 let main () =
   let argc, args = CLI.init () in
   if argc = 1 then
@@ -14,6 +16,7 @@ let main () =
   let x = CLI.get_float ["-x"] args in
   let verbose = CLI.get_set_bool ["-v"] args in
   let maybe_say_hi = CLI.get_string_opt ["--hi"] args in
+  CLI.finalize ();
   printf "i: %s o: %s n: %d x: %f v: %s\n"
     input_fn output_fn n x (string_of_bool verbose);
   match maybe_say_hi with
