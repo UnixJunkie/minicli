@@ -8,6 +8,7 @@ exception No_param_for_option of string
 exception More_than_once of string
 exception Option_is_mandatory of string
 exception Duplicate_in_specification of string
+exception Unused_options of string
 
 (** Sys.argv as a list *)
 type args = string list
@@ -22,6 +23,17 @@ type option_strings = string list
     [let argc, args = CLI.init () in ...]
     will compute [argc] and transform Sys.argv into the string list [args]. *)
 val init: unit -> int * args
+
+(** {4 Finalization} *)
+
+(** You can (but you are not forced to) call [finalize] in case options
+    parsing is finished. Meaning, the program will not try to process
+    command line options anymore.
+    [finalize] will enforce that there are no unused options left
+    on the command line.
+    In case there are some options left unused on the command line,
+    [finalize] will raise an [Unused_options] exception listing them all. *)
+val finalize: unit -> unit
 
 (** {4 Parse mandatory options} *)
 

@@ -76,6 +76,11 @@ module Raw_option = struct
 
 end
 
+module State = struct
+  (* store options processed so far *)
+  let options_seen = Ht.create 11
+end
+
 exception No_param_for_option of string
 
 let rec get_param (kwd: Raw_option.t) (args: string list): Processed_option.t =
@@ -108,8 +113,27 @@ let match_kwd (kwd: string list) (args: string list): string =
   let matched = L.filter (fun arg -> L.exists ((=) arg) kwd) args in
   match matched with
   | [] -> raise (Option_is_mandatory (string_of_strings kwd))
-  | [k] -> k
+  | [k] -> (Hashtbl.add State.options_seen k (); k)
   | _ -> raise (More_than_once (string_of_strings kwd))
+
+exception Unused_options of string
+
+(* find if there are unused options left on the CLI.
+   Note that options start with a '-' *)
+let finalize () =
+  let buff = Buffer.create 80 in
+  Array.iteri (fun i arg ->
+      (* i = 0: program/command name *)
+      if i <> 0 && String.get arg 0 = '-' &&
+         not (Hashtbl.mem State.options_seen arg) then
+        begin
+          if Buffer.length buff > 0 then
+            Buffer.add_char buff ','; (* sep *)
+          Buffer.add_string buff arg; (* unused option *)
+        end
+    ) Sys.argv;
+  if Buffer.length buff > 0 then
+    raise (Unused_options (Buffer.contents buff))
 
 (* mandatory options *)
 
