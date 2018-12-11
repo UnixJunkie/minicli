@@ -1,9 +1,9 @@
-# minicli
+# Minicli
 
 Minimalist OCaml library for command line parsing.
 Look into the test.ml file for usage examples/quickstart.
 
-# example session with the test program
+# Example session with the test program
 
     # ./test
     usage:
