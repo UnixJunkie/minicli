@@ -10,4 +10,4 @@
 
 (alias
   (name runtest)
-  (action (run ./test.exe)))
+  (action (run ./test.exe -i /dev/null -o /dev/null -n 1 -x 1.0 -v --hi there)))
