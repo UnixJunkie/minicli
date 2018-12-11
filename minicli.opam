@@ -3,7 +3,7 @@ maintainer: "unixjunkie@sdf.org"
 authors: "Francois Berenger"
 homepage: "https://github.com/UnixJunkie/minicli"
 bug-reports: "https://github.com/UnixJunkie/minicli/issues"
-dev-repo: "https://github.com/UnixJunkie/minicli.git"
+dev-repo: "git+https://github.com/UnixJunkie/minicli.git"
 build: [
   ["dune" "build" "-p" name]
   ["dune" "runtest" "-p" name] {with-test}
