@@ -129,7 +129,7 @@ let finalize () =
         begin
           if Buffer.length buff > 0 then
             Buffer.add_char buff ','; (* sep *)
-          Buffer.add_string buff arg; (* unused option *)
+          Buffer.add_string buff arg (* unused option *)
         end
     ) Sys.argv;
   if Buffer.length buff > 0 then
