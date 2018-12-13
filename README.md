@@ -38,3 +38,7 @@ Look into the test.ml file for usage examples/quickstart.
 
     # _build/default/test.exe --toto titi -i input.txt -o output.txt -n 123 -x 0.123 -v -y 42
     Fatal error: exception Minicli__CLI.Unused_options("--toto,-y")
+
+# Bibliography
+
+Stephenson, N. (1999). In the beginning... was the command line. New York: Avon books.
