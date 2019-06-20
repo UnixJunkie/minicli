@@ -10,6 +10,7 @@ build: [
 ]
 depends: [
   "dune" {build}
+  "ocaml"
 ]
 synopsis: "Minimalist library for command line parsing"
 description: """
