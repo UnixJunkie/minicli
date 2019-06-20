@@ -18,6 +18,8 @@ $TEST -i input.txt -o output.txt -n 123 -x /dev/null
 
 $TEST -i input.txt -o output.txt -n 123 -x 0.123
 
+$TEST -i input.txt -o output.txt -n 123 -x -0.123
+
 $TEST -i input.txt -o output.txt -n 123 -x 0.123 -v
 
 $TEST -i input.txt -o output.txt -n 123 -x 0.123 -v -i input.bin

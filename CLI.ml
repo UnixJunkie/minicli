@@ -118,13 +118,23 @@ let match_kwd (kwd: string list) (args: string list): string =
 
 exception Unused_options of string
 
+(* a negative number {-[0-9]+.*} is not an option *)
+let arg_is_option str =
+  (String.length str >= 2) &&
+  let c1 = String.unsafe_get str 0 in
+  (c1 = '-') &&
+  let c2 = String.unsafe_get str 1 in
+  let i2 = Char.code c2 in
+  (* ASCII code for digits: (48 <= i <= 57) *)
+  (i2 < 48 || i2 > 57)
+
 (* find if there are unused options left on the CLI.
    Note that options start with a '-' *)
 let finalize () =
   let buff = Buffer.create 80 in
   Array.iteri (fun i arg ->
       (* i = 0: program/command name *)
-      if i <> 0 && String.get arg 0 = '-' &&
+      if (i > 0) && (arg_is_option arg) &&
          not (Hashtbl.mem State.options_seen arg) then
         begin
           if Buffer.length buff > 0 then
