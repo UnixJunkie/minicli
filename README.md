@@ -3,6 +3,9 @@
 Minimalist OCaml library for command line parsing.
 Look into the test.ml file for usage examples/quickstart.
 
+>>> "Minicli: because the UNIX command-line is to the computer scientist
+>>> what latin and greek are to the linguist"
+
 # Example session with the test program
 
     # _build/default/test.exe
